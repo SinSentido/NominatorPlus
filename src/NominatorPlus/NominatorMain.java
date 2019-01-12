@@ -43,18 +43,10 @@ public class NominatorMain {
 			//Salario mensual
 			System.out.println("¿Cual es tu salario mensual?");
 			salary = readDouble();
-
-			//Informacion sobre pluses y suplementos
-			System.out.println("¿Cuantos pluses tienes que introducir?");
-			plusNumber = readInt();
-			plusConcept = new String[plusNumber];
-			plusAmount = new double[plusNumber];
-			//Se rellenan los pluses
-			pluses(plusConcept, plusAmount);
 			
-			//Información sobre pagas extras
-			if(readBoolean("¿Has realizado pagas extra este mes?")) {
-				System.out.println("¿Cuanto cobras por las pagas extra?");
+			//Información sobre horas extras
+			if(readBoolean("¿Has realizado horas extra este mes?")) {
+				System.out.println("¿Cuanto cobras por las horas extra?");
 				hhee = readDouble();
 			}
 			
@@ -65,6 +57,16 @@ public class NominatorMain {
 			//Cantidad de las pagas
 			System.out.println("¿De que cantidad es la paga extra?");
 			extraPay = readDouble();
+			
+			basicData(contractType, salary, extraPay, numberExtraPays);
+			
+			//Informacion sobre pluses y suplementos
+			System.out.println("¿Cuantos pluses tienes que introducir?");
+			plusNumber = readInt();
+			plusConcept = new String[plusNumber];
+			plusAmount = new double[plusNumber];
+			//Se rellenan los pluses
+			pluses(plusConcept, plusAmount);
 			
 			//2. Se calcula el devengo total.
 			devengoTotal = totalDevengado(salary, extraPay, plusAmount, hhee);
@@ -82,7 +84,7 @@ public class NominatorMain {
 			irpf = irpfCalc(devengoTotal);
 			
 			//5. Se suma el total de deduccion de la seguridad social y del IRPF y se resta al total devengado.
-			neto = devengoTotal - (irpf + segSocial);
+			neto = neto(irpf, segSocial, devengoTotal);
 			
 			System.out.println(neto);
 			
