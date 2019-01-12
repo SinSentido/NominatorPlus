@@ -58,7 +58,7 @@ public class NominatorMain {
 			System.out.println("¿De que cantidad es la paga extra?");
 			extraPay = readDouble();
 			
-			basicData(contractType, salary, extraPay, numberExtraPays);
+			basicData(contractType, salary, extraPay, numberExtraPays, hhee);
 			
 			//Informacion sobre pluses y suplementos
 			System.out.println("¿Cuantos pluses tienes que introducir?");

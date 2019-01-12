@@ -9,7 +9,7 @@ public class NominatorFunctions {
 	static PrintWriter pw = null;
 	
 	//FUNCION PARA IMPRIMIR LA CABECERA Y LOS DATOS BÁSICOS DE LA NÓMINA
-	public static void basicData(int contract, double salary, double extraPay, int numberExtraPays) {
+	public static void basicData(int contract, double salary, double extraPay, int numberExtraPays, double hhee) {
 		try {
 			nomina = new FileWriter("/home/sinsentido/Documentos/Nomina.txt", true);
 		}
@@ -18,7 +18,7 @@ public class NominatorFunctions {
 		}	
 		pw = new PrintWriter(nomina);
 		
-		pw.printf("%n----- NOMINA FOL -----%n%n");
+		pw.printf("%n----------NÓMINA FOL----------%n%n");
 			
 		if(contract == 1) {
 			pw.printf("TIPO DE CONTRATO: Indefinido%n%n");
@@ -26,9 +26,10 @@ public class NominatorFunctions {
 		else {
 			pw.printf("TIPO DE CONTRATO: Temporal%n%n");
 		}
-			
-		pw.printf("Salario base:_______________ %f%n", salary);
-		pw.printf("Pagas extra:________________ %f x %d%n", extraPay, numberExtraPays);
+		pw.printf("%n----------I DEVENGOS----------%n%n");	
+		pw.printf("Salario base:_______________ %f€%n", salary);
+		pw.printf("Pagas extra:________________ %f€ (%d anuales)%n", extraPay, numberExtraPays);
+		pw.printf("Horas extra:________________ %f€%n", hhee);
 		pw.close();
 	}
 
@@ -83,7 +84,7 @@ public class NominatorFunctions {
 		else {
 			total = salary + plusTotal + hhee;
 		}
-		pw.printf("%n%nTOTAL DEVENGADO _______________  %f%n%n", total);
+		pw.printf("%nTOTAL DEVENGADO _______________  %f%n%n", total);
 		pw.close();
 		return total;
 	}
@@ -110,6 +111,7 @@ public class NominatorFunctions {
 		//Ahora se suman todos los elemento prorrateando las pagas extra.
 		total = salary + plusTotal + ((extraPay*numberExtraPays)/12);
 		
+		pw.printf("%n----------BASES DE COTIZACIÓN----------%n%n");
 		pw.printf("BCCC_______________ %f%n", total);
 		pw.close();
 		return total;
@@ -147,41 +149,42 @@ public class NominatorFunctions {
 		}
 		pw = new PrintWriter(nomina);
 		
+		pw.printf("%n----------II DEDUCCIONES----------%n%n");
 		switch(contract) {
 		//Si el contrato es indefinido
 		case 1:
 			//Contingencias comunes
 			cc = bccc*0.047;
-			pw.printf("Contingencias comunes_____4,70 de BCCC(%f)%n", bccc);
+			pw.printf("Contingencias comunes_____4,70 de BCCC(%f)_____%f€%n", bccc, cc);
 			//Desempleo
 			desempleo = bccp*0.0155;
-			pw.printf("Desempleo_________________1,55 de BCCP(%f)%n", bccp);
+			pw.printf("Desempleo_________________1,55 de BCCP(%f)_____%f€%n", bccp, desempleo);
 			//Formación profesional
 			fp = bccp*0.001;
-			pw.printf("Formación profesional_____0,10 de BCCP(%f)%n", bccp);
+			pw.printf("Formación profesional_____0,10 de BCCP(%f)_____%f€%n", bccp, fp);
 			//Horas extras
 			hhee = bchhee*0.047;
-			pw.printf("Horas extras______________4,70 de BChhee(%f)%n", bchhee);
+			pw.printf("Horas extras______________4,70 de BChhee(%f)___%f€%n%n", bchhee, hhee);
 			break;
 		//Si el contrato es temporal
 		case 2:
 			//Contingencias comunes
 			cc = bccc*0.047;
-			pw.printf("Contingencias comunes_____4,70 de BCCC(%f)%n", bccc);
+			pw.printf("Contingencias comunes_____4,70 de BCCC(%f)_____%f€%n", bccc, cc);
 			//Desempleo
 			desempleo = bccp*0.016;
-			pw.printf("Desempleo_________________1,60 de BCCP(%f)%n", bccp);
+			pw.printf("Desempleo_________________1,60 de BCCP(%f)_____%f€%n", bccp, desempleo);
 			//Formación profesional
 			fp = bccp*0.001;
-			pw.printf("Formación profesional_____0,10 de BCCP(%f)%n", bccp);
+			pw.printf("Formación profesional_____0,10 de BCCP(%f)_____%f€%n", bccp, fp);
 			//Horas extras
 			hhee = bchhee*0.047;
-			pw.printf("Horas extras______________4,70 de BChhee(%f)%n", bchhee);
+			pw.printf("Horas extras______________4,70 de BChhee(%f)___%f€%n%n", bchhee, hhee);
 			break;
 		}
 		
 		total = cc + desempleo + fp + hhee;
-		pw.printf("TOTAL:___________________________%f%n%n", total);
+		pw.printf("Total Seguridad Social:___________________________%f%n%n", total);
 		pw.close();
 		return total;
 	}
@@ -222,8 +225,9 @@ public class NominatorFunctions {
 		pw = new PrintWriter(nomina);
 		
 		total = totalDevengado - (irpf + ss);
-		pw.printf("TOTAL A DEDUCIR (Seguridad Social + IRPF) _____________ %f%n ", irpf+ss);
-		pw.printf("SALARIO NETO (Total devengado - Total a deducir)_______ %f%n ", total);
+		pw.printf("%n----------III LIQUIDO A PERCIBIR----------%n%n");
+		pw.printf("TOTAL A DEDUCIR (Seguridad Social + IRPF) _____________ %f%n%n", irpf+ss);
+		pw.printf("SALARIO NETO (Total devengado - Total a deducir)_______ %f%n", total);
 		pw.close();
 		return total;
 	}
