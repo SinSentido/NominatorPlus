@@ -184,7 +184,7 @@ public class NominatorFunctions {
 		}
 		
 		total = cc + desempleo + fp + hhee;
-		pw.printf("Total Seguridad Social:___________________________%f%n%n", total);
+		pw.printf("Total Seguridad Social:______________________________%f%n%n", total);
 		pw.close();
 		return total;
 	}
